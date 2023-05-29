@@ -67,15 +67,18 @@ class ContactController extends Controller
      */
     public function update(Request $request)
     {
+        $contactNumber = preg_replace('/[^0-9]/', '', $request->contact);
+        $request->merge([
+            'contact' => $contactNumber,
+        ]);
+
         $rules = [ 
             'name' => 'required|max:255|min:5',
-            'contact' => 'required|min:9|max:9',
-            'email' => 'required|email|unique:contacts,email',
+            'contact' => 'required|min:10|max:10',
+            'email' => 'required|email|unique:contacts,email,' . $request->id,
         ];
-
         if($request->validate($rules)){
             $contact = Contact::updateContact($request);
-
             if($contact) {
                 return redirect()->back()->with('success', 'Contact updated with success!');
             } else {

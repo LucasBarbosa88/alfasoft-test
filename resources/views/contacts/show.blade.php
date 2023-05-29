@@ -4,8 +4,8 @@
 <div class="container pt-3">
    <div class="card">
       <div class="card-header" style="text-align:right">
-         <a class="navbar-brand" href="{{ url('/') }}">
-            <h5>Voltar</h5>
+         <a class="navbar-brand" href="{{ route('home') }}">
+            <h5>Back</h5>
          </a>
       </div>
       <div class="card-header">Contact Informations</div>

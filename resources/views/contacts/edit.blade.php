@@ -24,9 +24,9 @@
                     <label for="fname">Name:</label>
                     <input type="text" class="form-control" id="fname" name="name" value="{{$contact->name}}" require>
                 </div>
-                <div class="form-group col-sm-9">
+                <div class="form-group col-6">
                     <label for="fcontact">Contact:</label>
-                    <input type="text" class="form-control" maxlength="14" id="fcontact" name="contact" value="{{$contact->contact}}" onkeyup="handlePhone(event)" require>
+                    <input type="tel" class="form-control" maxlength="14" id="fcontact" name="contact" value="{{$contact->contact}}" placeholder="Contact (00) 00000-0000" onkeyup="handlePhone(event)" require>
                 </div>
                 <div class="form-group col-sm-9">
                     <label for="femail">Email:</label>
