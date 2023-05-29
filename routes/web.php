@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth', 'needsRole:admin'], 'prefix' => 'admin'], function () {
-	Route::post('contact/create', 'ContactController@store');
-	Route::put('contact/edit/{ID}', 'ContactController@edit');
-	Route::post('contact/update', 'ContactController@update');
-	Route::get('contact/delete/{ID}', 'ContactController@delete');
-});
+Route::get('/create', [ContactController::class, 'create'])->name('create');
+Route::get('/contact/{ID}', [ContactController::class, 'show'])->name('show');
+Route::post('contact/create', [ContactController::class, 'store'])->name('store');
+Route::get('contact/edit/{ID}', [ContactController::class, 'edit'])->name('edit');
+Route::post('contact/update', [ContactController::class, 'update'])->name('update');
+Route::get('contact/delete/{ID}', [ContactController::class, 'delete'])->name('delete');

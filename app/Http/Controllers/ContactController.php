@@ -11,6 +11,24 @@ class ContactController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function create()
+    {
+        return view('contacts.create');
+    }
+
+    public function edit($id)
+    {
+        $contact = Contact::find($id);
+        return view('contacts.edit', compact('contact'));
+    }
+
+    public function show($id)
+    {
+        $contact = Contact::find($id);
+        return view('contacts.show', compact('contact'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -19,12 +37,15 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        $contactNumber = preg_replace('/[^0-9]/', '', $request->contact);
+        $request->merge([
+            'contact' => $contactNumber,
+        ]);
         $rules = [
             'name' => 'required|max:255|min:5',
-            'contact' => 'required|min:9|max:9',
+            'contact' => 'required|min:10|max:10',
             'email' => 'required|email|unique:contacts,email',
         ];
-
         if($request->validate($rules)){
             $contact = Contact::create($request);
             if($contact){
@@ -78,5 +99,9 @@ class ContactController extends Controller
             return redirect()->back()->with('success', 'Contact deleted with success!');
         }
         return redirect()->back()->with('danger', 'Contact not found, try again!');
+    }
+
+    public function onlyDigits($data) {
+        return preg_replace('/[^0-9]/', '', $data);    
     }
 }
